@@ -11,11 +11,24 @@ const LikeButton:React.FC = () => {
         console.log('document title effect is running !')
         window.document.title = `点击了:${like}次`
     },[like])
+
+    // 测试看能够获得最新的state值
+    // 不能够获得最新的值
+    const handleAlertClick = () => {
+        setTimeout(() => {
+            alert('You clicked on ' + like)
+        },3000)
+    }
+    // function handleAlertClick() {
+    //     setTimeout(() => {
+    //         alert('You clicked on ' + like)
+    //     },3000)
+    // }
     return (
         <>
             <h2>x:{x},y:{y}</h2>
             <button onClick={() => {setLike(like+1)}}>{like}👍🏻</button>
-            <button onClick={() => {setOn(!on)}}>{message}</button>
+            <button onClick={handleAlertClick}>Alert</button>
         </>
     )
 }
