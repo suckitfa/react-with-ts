@@ -25,7 +25,7 @@ const withLoader = <P extends ILoaderState>(WrappedComponent: React.ComponentTyp
         axios.get(url).then(result => {
           this.setState({
             data: result.data,
-            isLoading: false
+            isLoading: true
           })
         })
       }
