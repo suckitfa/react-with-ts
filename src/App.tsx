@@ -7,10 +7,19 @@ import MouseTracker from './components/MouseTracker';
 import useMousePositionHook from './hooks/useMousePosition';
 import DogShow from './components/DogShow';
 import withLoader from './components/withLoader';
+import useURLLoader from './hooks/useURLLoader';
 const dogImagURL = 'https://dog.ceo/api/breeds/image/random'
+
+interface IShowResult {
+  message:string;
+  status:string;
+}
+
 function App() {
   const positions = useMousePositionHook()
   const WrapperDogShow = withLoader(DogShow,dogImagURL)
+  const [data,loading] =  useURLLoader(dogImagURL)
+  const dogResult  = data as IShowResult
   return (
     <div className="App">
       <header className="App-header">
@@ -30,6 +39,11 @@ function App() {
       </header>
       <h1>使用HOC来实现组件的复用</h1>
       <WrapperDogShow />
+      <h1>使用Hooks来实现Loading效果</h1>
+      {
+        loading ? <p>🐶读取中</p> 
+        : <img src={dogResult&&dogResult.message} alt="" />
+      }
     </div>
   );
 }
