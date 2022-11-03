@@ -1,4 +1,5 @@
-import React,{useState,useEffect, useRef} from "react";
+import React,{useState,useEffect, useRef,useContext} from "react";
+import { ThemeContext } from "../App";
 import useMousePositionHook from "../hooks/useMousePosition";
 const LikeButton:React.FC = () => {
     // const [likeObj,setLikeObj] = useState({like:0,on:true})
@@ -8,6 +9,10 @@ const LikeButton:React.FC = () => {
     const didMountRef = useRef(false)
     const inputRef = useRef<HTMLInputElement>(null)
     const {x,y} = useMousePositionHook()
+    const theme = useContext(ThemeContext)
+    const style = {
+        ...theme
+    }
     const message = on === true ? 'ON' : "OFF"
     // 默认：第一次渲染和每次渲染之后都执行
     useEffect(() => {
@@ -48,7 +53,7 @@ const LikeButton:React.FC = () => {
         <>
             <h2>x:{x},y:{y}</h2>
             <input type="text" ref={inputRef} />
-            <button onClick={handleFocus}>Focus Input!</button>
+            <button onClick={handleFocus} style={style}>Focus Input!</button>
             <button onClick={() => {setLike(like+1);likeRef.current++;}}>{like}👍🏻</button>
             <button onClick={handleAlertClick}>Alert</button>
         </>

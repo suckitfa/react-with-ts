@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import Hello from './components/Hello'
@@ -15,6 +15,21 @@ interface IShowResult {
   status:string;
 }
 
+interface ITHemeProps {
+  [key:string]:{color:string;background:string;}
+}
+const themes:ITHemeProps = {
+  'light' : {
+    color:"#000",
+    background:'#eee'
+  },
+  'dark': {
+    color:'#fff',
+    background:'#222'
+  }
+}
+export const ThemeContext = React.createContext(themes.light)
+
 function App() {
   const positions = useMousePositionHook()
   const WrapperDogShow = withLoader(DogShow,dogImagURL)
@@ -22,6 +37,7 @@ function App() {
   const dogResult  = data as IShowResult
   return (
     <div className="App">
+      <ThemeContext.Provider value={themes.dark}>
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <Hello />
@@ -44,6 +60,7 @@ function App() {
         loading ? <p>🐶读取中</p> 
         : <img src={dogResult&&dogResult.message} alt="" />
       }
+      </ThemeContext.Provider>
     </div>
   );
 }
